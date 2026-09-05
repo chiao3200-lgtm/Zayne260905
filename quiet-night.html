@@ -29,7 +29,7 @@ body{
 
 /* ===== 未成年警告閘門 ===== */
 .gate-overlay{position:fixed; inset:0; max-width:480px; margin-left:auto; margin-right:auto; z-index:100; background:rgba(10,16,26,.94); display:flex; align-items:center; justify-content:center; padding:20px;}
-.gate-card{background:#fff; color:var(--ice-ink); border-radius:22px; padding:26px 22px; max-width:360px; width:100%; text-align:center; box-shadow:0 16px 30px rgba(0,0,0,.4);}
+.gate-card{background:#fff; color:var(--ice-ink); border-radius:22px; padding:26px 22px; max-width:360px; width:100%; text-align:center; box-shadow:0 16px 30px rgba(0,0,0,.4); max-height:88vh; overflow-y:auto;}
 .gate-icon{font-size:40px; margin-bottom:6px;}
 .gate-kicker{font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-pink-deep); margin-bottom:8px;}
 .gate-card h2{font-family:var(--font-display); font-weight:400; font-size:20px; margin:0 0 10px; color:var(--accent-pink-deep);}
@@ -77,7 +77,7 @@ body{
 /* ===== 結尾視窗 ===== */
 .overlay{position:fixed; inset:0; max-width:480px; margin-left:auto; margin-right:auto; z-index:60; background:rgba(10,16,26,.85); display:none; align-items:center; justify-content:center; padding:20px;}
 .overlay.active{display:flex;}
-.end-card{background:#fff; color:var(--ice-ink); border-radius:22px; padding:26px 22px; max-width:380px; width:100%; text-align:center; box-shadow:0 16px 30px rgba(0,0,0,.4);}
+.end-card{background:#fff; color:var(--ice-ink); border-radius:22px; padding:26px 22px; max-width:380px; width:100%; text-align:center; box-shadow:0 16px 30px rgba(0,0,0,.4); max-height:88vh; overflow-y:auto;}
 .end-title{font-family:var(--font-display); font-size:20px; color:var(--accent-pink-deep); margin-bottom:6px;}
 .end-icon{font-size:34px; margin-bottom:6px;}
 .end-kicker{font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-pink-deep); margin-bottom:4px;}
@@ -148,8 +148,8 @@ const LINES = [
   {speaker:'', text:'外頭的風雪聲被隔絕在很遠的地方，只剩暖氣運轉的低鳴。', glyph:'', img:''},
   {speaker:'黎深', text:'...還冷嗎?', glyph:'', img:'assets/night-1.jpg'},
   {speaker:'你', text:'不冷...嗯...', glyph:'', img:'assets/night-1.jpg'},
-  {speaker:'', text:'雪不知道什麼時候停了，淺淺的月光為兩人罩上朦朧的光暈，能夠看清彼此的輪廓', glyph:'', img:'assets/night-1.jpg'},
-    {speaker:'', text:'交纏的四肢是如此契合，彷彿生來就屬於彼此。', glyph:'', img:'assets/night-1.jpg'},
+  {speaker:'', text:'雪不知道什麼時候停了，淺淺的月光為兩人罩上朦朧的光暈，能夠看清彼此的輪廓', glyph:'', img:'assets/night-2.jpg'},
+    {speaker:'', text:'交纏的四肢是如此契合，彷彿生來就屬於彼此。', glyph:'', img:'assets/night-2.jpg'},
   {speaker:'黎深', text:'......喊我的名字。', glyph:'', img:'assets/night-2.jpg'},
   {speaker:'你', text:'黎深。', glyph:'', img:'assets/night-2.jpg'},
   {speaker:'黎深', text:'......再喊一次。', glyph:'', img:'assets/night-2.jpg'},
