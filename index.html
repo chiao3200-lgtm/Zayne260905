@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>0905黎深生日企劃</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+<!-- 預先讀取秘密相簿頁面，讓通關後點擊 CG 連結時能立即開啟 -->
+<link rel="prefetch" href="secret-album.html">
+<style>
+:root{
+  --ice-pale:#eaf7fd;
+  --ice-light:#c9e9f7;
+  --ice-mid:#8fd0ef;
+  --ice-deep:#4aa8d8;
+  --ice-navy:#1f4d73;
+  --ice-ink:#123048;
+  --snow:#ffffff;
+  --accent-pink:#ff9fc7;
+  --accent-pink-deep:#ef6fa5;
+  --accent-gold:#ffd97a;
+  --shadow:rgba(31,77,115,.28);
+  --font-display:'DM Serif Display', 'Noto Serif TC', serif;
+  --font-body:'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  --font-mono:'JetBrains Mono', monospace;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;height:100%;}
+body{
+  font-family:var(--font-body);
+  background:
+    radial-gradient(circle at 15% 10%, #ffffff 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, #ffffff 0%, transparent 35%),
+    linear-gradient(180deg, var(--ice-pale) 0%, var(--ice-light) 55%, var(--ice-mid) 100%);
+  color:var(--ice-ink);
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+/* 飄雪背景 */
+#snowfall{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+.flake{position:absolute; top:-5%; color:#fff; opacity:.8; user-select:none; filter:drop-shadow(0 0 2px rgba(255,255,255,.8));
+  animation:fall linear infinite;}
+@keyframes fall{ to { transform:translateY(115vh) translateX(var(--drift,0px)) rotate(360deg);} }
+
+.app{position:relative; z-index:2; max-width:640px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column;}
+.screen{display:none; flex-direction:column; padding:20px 18px 40px; animation:fadeIn .45s ease;}
+#screen-carving{user-select:none; -webkit-user-select:none; -webkit-touch-callout:none;}
+.screen.active{display:flex;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+
+h1,h2,h3{font-family:var(--font-display); font-weight:400; margin:0; color:var(--ice-navy);}
+.btn{
+  font-family:var(--font-display);
+  font-size:17px;
+  border:1.5px solid var(--ice-light);
+  border-radius:10px;
+  padding:13px 26px;
+  cursor:pointer;
+  background:#ffffff;
+  color:var(--ice-navy);
+  box-shadow:0 1px 3px var(--shadow);
+  transition:background-color .12s ease, border-color .12s ease, transform .1s ease;
+  letter-spacing:1px;
+}
+.btn:hover{background:var(--ice-pale);}
+.btn:active{transform:translateY(1px);}
+.btn:focus-visible{outline:2px solid var(--ice-deep); outline-offset:2px;}
+.btn.primary{background:var(--ice-deep); border-color:var(--ice-deep); color:#fff;}
+.btn.primary:hover{background:#3f92c2;}
+.btn.pink{background:var(--accent-pink-deep); border-color:var(--accent-pink-deep); color:#fff;}
+.btn.pink:hover{background:#e0578f;}
+.btn.small{padding:8px 16px; font-size:14px;}
+.btn:disabled{opacity:.45; cursor:not-allowed;}
+
+/* ---------- 標題畫面 ---------- */
+#screen-title{align-items:center; text-align:center; justify-content:flex-start; padding-top:34px; min-height:100vh;}
+.title-badge{font-family:var(--font-mono); font-size:12px; background:#fff; color:var(--accent-pink-deep); padding:5px 16px; border-radius:999px; box-shadow:0 3px 8px var(--shadow); letter-spacing:.12em; text-transform:uppercase; margin-bottom:10px;}
+.title-main{font-size:clamp(30px,8vw,44px); line-height:1.25; text-shadow:0 3px 0 #fff, 0 6px 14px var(--shadow);}
+.title-sub{font-family:var(--font-body); font-size:14px; color:var(--ice-deep); margin-top:8px; font-weight:500;}
+
+.stage{
+  position:relative; width:min(320px,80vw); height:min(320px,80vw); margin:26px auto 10px;
+  background:radial-gradient(circle at 50% 60%, #ffffff 0%, var(--ice-light) 68%, transparent 72%);
+  border-radius:50%;
+}
+.stage::after{content:""; position:absolute; left:8%; right:8%; bottom:6%; height:16px; background:radial-gradient(ellipse, var(--shadow), transparent 70%); filter:blur(2px);}
+.snowman{position:absolute; left:50%; bottom:14%; transform:translateX(-50%); width:64%; animation:bob 3.2s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0) rotate(-1.5deg);} 50%{transform:translateX(-50%) translateY(-8px) rotate(1.5deg);}}
+/* 可替換：把下面 svg 換成 <img src="snowman.gif" class="snowman"> 即可換動圖 */
+
+.title-actions{display:flex; gap:12px; margin-top:14px; flex-wrap:wrap; justify-content:center;}
+.progress-btn{
+  margin-top:20px; font-family:var(--font-mono); font-size:12px; letter-spacing:.02em; color:var(--ice-navy);
+  background:#fff; padding:9px 18px; border-radius:999px; box-shadow:0 1px 3px var(--shadow); border:1.5px solid var(--ice-light);
+  display:inline-flex; align-items:center; gap:6px; cursor:pointer; transition:background-color .12s ease;
+}
+.progress-btn:hover{background:var(--ice-pale);}
+
+/* ---------- 通用 header ---------- */
+.top-row{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
+.back-btn{background:#fff; border:1.5px solid var(--ice-light); border-radius:10px; width:38px; height:38px; font-size:18px; color:var(--ice-navy); box-shadow:0 1px 3px var(--shadow); cursor:pointer; transition:background-color .12s ease;}
+.back-btn:hover{background:var(--ice-pale);}
+.screen-title-text{font-size:20px;}
+
+/* ---------- 關卡選擇 ---------- */
+.level-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:6px;}
+.level-card{
+  position:relative; background:#fff; border-radius:22px; padding:16px 10px 14px; text-align:center; cursor:pointer;
+  box-shadow:0 6px 0 var(--ice-light), 0 10px 16px var(--shadow); border:2px solid transparent; transition:transform .15s ease;
+}
+.level-card:active{transform:translateY(4px);}
+.level-card.locked{filter:grayscale(.55); opacity:.7; cursor:not-allowed;}
+.level-card.done{border-color:var(--accent-gold);}
+.level-card .icon-wrap{width:64px; height:64px; margin:0 auto 8px;}
+.level-card .lv-name{font-size:14px; font-weight:700;}
+.level-card .lv-tag{font-size:11px; color:var(--ice-deep); margin-top:2px;}
+.done-stamp{position:absolute; top:-8px; right:-6px; background:var(--accent-gold); color:#7a4a00; font-size:11px; font-family:var(--font-display); padding:4px 8px; border-radius:999px; box-shadow:0 3px 6px var(--shadow); transform:rotate(8deg);}
+.lock-icon{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:26px; color:var(--ice-navy); opacity:.55;}
+
+/* ---------- 雕刻畫面 ---------- */
+#screen-carving .carve-header{display:flex; flex-direction:column; gap:8px; margin-bottom:10px;}
+.timer-bar-outer, .progress-bar-outer{background:#fff; border-radius:999px; height:16px; box-shadow:inset 0 2px 5px rgba(0,0,0,.12); overflow:hidden;}
+.timer-bar-inner{height:100%; background:linear-gradient(90deg, var(--accent-pink), var(--accent-pink-deep)); width:100%; transition:width .2s linear;}
+.progress-bar-inner{height:100%; background:linear-gradient(90deg, #8fe0ff, var(--ice-deep)); width:0%; transition:width .18s ease;}
+.bar-label{font-family:var(--font-mono); font-size:11px; letter-spacing:.02em; color:var(--ice-deep); display:flex; justify-content:space-between; padding:0 4px;}
+
+.carve-stage{
+  display:flex; align-items:flex-end; justify-content:center; gap:clamp(2px,1.5vw,8px); margin:14px 0 6px; position:relative; min-height:380px; flex-wrap:nowrap;
+}
+/* 角色小人（可替換：把 .carver-body / .carver-head 換成 <img> 插畫即可） */
+.carver{width:clamp(76px,25vw,110px); display:flex; flex-direction:column; align-items:center; gap:4px; flex-shrink:0; cursor:pointer;}
+.carver-figure{position:relative; width:100%; aspect-ratio:58/76;}
+.carver-body{position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:65%; height:60%; border-radius:16px 16px 9px 9px; background:linear-gradient(180deg, var(--ice-mid), var(--ice-deep)); box-shadow:0 4px 8px var(--shadow);}
+.carver-head{position:absolute; top:0; left:50%; transform:translateX(-50%); width:55%; aspect-ratio:1/1; border-radius:50%; background:#ffe3c4; box-shadow:0 0 0 3px #fff; overflow:visible;}
+.carver-head::before, .carver-head::after{content:''; position:absolute; top:44%; width:3px; height:3px; border-radius:50%; background:#3a2a1a; z-index:2;}
+.carver-head::before{left:26%;}
+.carver-head::after{right:26%;}
+.carver-hair{position:absolute; top:-6%; left:50%; transform:translateX(-50%); width:104%; height:44%; border-radius:50% 50% 12% 12% / 65% 65% 15% 15%; z-index:1; background:#33414c;}
+.player-head::before, .player-head::after{background:var(--player-eye,#3a2a1a);}
+.player-hair{background:var(--player-hair,#4a3428);}
+.carver-tool{position:absolute; font-size:clamp(28px,9vw,41px); top:42%; transform-origin:bottom left; transition:transform .08s ease; filter:drop-shadow(0 2px 3px var(--shadow)); z-index:3;}
+.carver.right .carver-tool{right:-8px; transform-origin:bottom left;}
+.carver.left .carver-tool{left:-8px; transform-origin:bottom right; transform:scaleX(-1);}
+.carver.left .carver-tool.swing{animation:swing-left .18s ease;}
+.carver.right .carver-tool.swing{animation:swing .18s ease;}
+@keyframes swing{0%{transform:rotate(0)}30%{transform:rotate(-28deg)}60%{transform:rotate(14deg)}100%{transform:rotate(0)}}
+@keyframes swing-left{0%{transform:scaleX(-1) rotate(0)}30%{transform:scaleX(-1) rotate(-28deg)}60%{transform:scaleX(-1) rotate(14deg)}100%{transform:scaleX(-1) rotate(0)}}
+
+.ice-column{display:flex; flex-direction:column; align-items:center; flex-shrink:1; min-width:0;}
+
+.ice-block-wrap{
+  position:relative; width:clamp(195px,67vw,285px); aspect-ratio:1/1; border-radius:26px; background:linear-gradient(160deg,#fff,var(--ice-light));
+  box-shadow:0 10px 0 var(--ice-light), 0 16px 24px var(--shadow); overflow:hidden; cursor:pointer; user-select:none;
+  margin-bottom:10px;
+}
+.ice-block-wrap:active{transform:scale(.97);}
+.sculpture-final, .sculpture-ice{position:absolute; inset:0; width:100%; height:100%; -webkit-user-drag:none; user-select:none;}
+.sculpture-ice{transition:opacity .18s ease; opacity:1;}
+.crack{position:absolute; opacity:0; transition:opacity .2s ease;}
+.shard{position:absolute; width:10px; height:10px; background:linear-gradient(160deg,#fff,var(--ice-mid)); border-radius:3px; pointer-events:none; z-index:9;}
+@keyframes shard-fly{ to { transform:translate(var(--sx),var(--sy)) rotate(var(--sr)); opacity:0; } }
+
+.event-banner{
+  position:absolute; left:50%; top:-6px; transform:translate(-50%,-100%); background:#fff; padding:7px 14px; border-radius:14px;
+  font-size:13px; box-shadow:0 4px 10px var(--shadow); white-space:nowrap; opacity:0; transition:all .3s ease; pointer-events:none; z-index:10;
+}
+.event-banner.show{opacity:1; transform:translate(-50%,10px);}
+.event-banner.melt{color:#e06a4c;}
+.event-banner.assist{color:var(--accent-pink-deep);}
+.event-banner.cold{color:var(--ice-deep);}
+
+/* 特殊事件動畫 */
+.ice-block-wrap.evt-melt{animation:melt-wobble .5s ease;}
+@keyframes melt-wobble{0%{transform:translateY(0) rotate(0)}30%{transform:translateY(3px) rotate(-1.4deg)}60%{transform:translateY(0) rotate(1.4deg)}100%{transform:translateY(0) rotate(0)}}
+.drip{position:absolute; width:7px; height:11px; background:linear-gradient(180deg,#d7f0fb,#5fb9e6); border-radius:0 60% 60% 60%; pointer-events:none; z-index:8; animation:drip-fall .75s ease forwards;}
+@keyframes drip-fall{0%{opacity:1; transform:translateY(0) scale(1);}100%{opacity:0; transform:translateY(46px) scale(.6);}}
+
+.carver-figure.shiver{animation:shiver .4s ease;}
+@keyframes shiver{0%,100%{transform:translateX(0)}20%{transform:translateX(-3px)}40%{transform:translateX(3px)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
+.frost-flash{position:absolute; inset:0; background:radial-gradient(circle, rgba(255,255,255,.85), transparent 70%); pointer-events:none; z-index:7; animation:frost-fade .5s ease forwards;}
+@keyframes frost-fade{0%{opacity:1;}100%{opacity:0;}}
+
+.sparkle{position:absolute; font-size:14px; pointer-events:none; z-index:9; animation:sparkle-pop .6s ease forwards;}
+@keyframes sparkle-pop{0%{opacity:0; transform:translateY(0) scale(.4);}30%{opacity:1; transform:translateY(-10px) scale(1);}100%{opacity:0; transform:translateY(-26px) scale(.7);}}
+
+.carve-hint{text-align:center; font-size:13px; color:var(--ice-deep); margin-top:8px;}
+.lv-title-row{text-align:center; margin-bottom:2px;}
+.lv-title-row .lv-en{font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; color:var(--ice-deep);}
+
+/* ---------- 覆蓋層（提示 / 對話 / 秘密結局 / 失敗）---------- */
+.overlay{position:fixed; inset:0; background:rgba(18,48,72,.55); backdrop-filter:blur(2px); display:none; align-items:center; justify-content:center; z-index:50; padding:20px;}
+.overlay.active{display:flex;}
+.card{background:#fff; border-radius:24px; padding:22px 20px; max-width:420px; width:100%; box-shadow:0 14px 30px rgba(0,0,0,.25); text-align:center; max-height:88vh; overflow-y:auto;}
+.card h3{font-size:19px; margin-bottom:10px;}
+.card p{font-size:14px; line-height:1.7; color:var(--ice-ink); text-align:center;}
+.tip-icon{font-size:38px; margin-bottom:8px;}
+.tip-mascot{margin:0 auto 6px; display:block;}
+.tip-bubble{background:var(--ice-pale); border-radius:16px; padding:12px 14px; margin:4px 0 12px; text-align:center;}
+.tip-bubble p{margin:0;}
+
+/* 對話 CG 卡 */
+.cg-frame{
+  width:100%; aspect-ratio:4/3; border-radius:16px; margin-bottom:14px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:linear-gradient(150deg, var(--ice-pale), var(--ice-light)); box-shadow:inset 0 0 0 2px #fff, 0 6px 14px var(--shadow); position:relative; overflow:hidden;
+}
+.cg-frame .cg-glyph{font-size:52px;}
+.cg-frame .cg-caption{font-family:var(--font-mono); font-size:11px; letter-spacing:.02em; color:var(--ice-deep); margin-top:6px; padding:0 16px;}
+/* 自訂CG圖片：有設定路徑且成功載入時會蓋滿整個卡片；沒有圖片或載入失敗則自動顯示emoji佔位 */
+.cg-photo{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:2; display:none;}
+.cg-photo[src]:not([src=""]){display:block;}
+.cg-frame.has-photo .cg-glyph, .cg-frame.has-photo .cg-caption{display:none;}
+.dialogue-box{background:var(--ice-pale); border-radius:14px; padding:12px 14px; text-align:left; min-height:70px; margin-bottom:14px;}
+.dialogue-speaker{font-family:var(--font-display); font-size:13px; color:var(--accent-pink-deep); margin-bottom:4px;}
+.dialogue-text{font-size:14px; line-height:1.7;}
+.dialogue-actions{display:flex; justify-content:flex-end; gap:8px;}
+
+/* CG 收藏冊 */
+.cg-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:6px;}
+.cg-thumb{position:relative; aspect-ratio:4/3; border-radius:14px; background:linear-gradient(150deg,var(--ice-pale),var(--ice-light)); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px var(--shadow); cursor:pointer; overflow:hidden;}
+.cg-thumb.locked{filter:grayscale(1); opacity:.55; cursor:default;}
+.cg-thumb .glyph{font-size:30px;}
+.cg-thumb-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
+.cg-thumb .name{position:absolute; bottom:5px; font-size:10px; color:var(--ice-navy); background:rgba(255,255,255,.8); padding:2px 8px; border-radius:8px; z-index:2;}
+
+/* 秘密結局 */
+.secret-card{background:linear-gradient(165deg,#fff, var(--ice-pale)); border:2px solid var(--accent-gold);}
+.secret-header{position:relative; margin-bottom:14px; padding:0 34px;}
+.secret-title{font-size:20px; color:var(--accent-pink-deep); text-align:center; line-height:1.4;}
+.secret-close{position:absolute; top:-6px; right:-4px;}
+.cg-link-hint{font-size:11.5px; color:var(--accent-pink-deep); margin:-8px 0 14px; text-align:center;}
+.dialogue-actions.center{justify-content:center;}
+.author-box{margin-top:16px; padding-top:14px; border-top:1px dashed var(--ice-light); font-family:var(--font-mono); font-size:11px; letter-spacing:.01em; color:var(--ice-deep); line-height:1.9; text-align:center;}
+.author-actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:14px;}
+
+.fail-emoji{font-size:44px;}
+.fail-photo{display:none; width:100%; max-width:220px; margin:0 auto 10px; border-radius:14px;}
+.fail-photo[src]:not([src=""]){display:block;}
+
+/* ================= 響應式設計 ================= */
+@media (max-width:380px){
+  .screen{padding:16px 12px 32px;}
+  .card{padding:18px 14px;}
+  .title-main{font-size:clamp(26px,9vw,38px);}
+  .carve-stage{gap:0;}
+}
+@media (max-width:340px){
+  .carver{width:69px;}
+  .ice-block-wrap{width:clamp(165px,63vw,285px);}
+}
+@media (max-height:700px){
+  .stage{margin:16px auto 6px;}
+  .carve-stage{min-height:300px; margin:10px 0 4px;}
+}
+@media (min-width:480px){
+  .app{padding:0 12px;}
+}
+
+/* 自訂角色插圖：放對路徑的圖檔會自動蓋在內建小人上方；沒有圖檔時 onerror 會自動隱藏，顯示內建造型 */
+.carver-photo{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:bottom center; z-index:4; pointer-events:none; display:none; -webkit-user-drag:none; user-select:none;}
+.carver-photo[src]:not([src=""]){display:block;}
+.carver-figure.has-photo .carver-body, .carver-figure.has-photo .carver-head, .carver-figure.has-photo .carver-tool{display:none;}
+</style>
+</head>
+<body>
+
+<div id="snowfall"></div>
+
+<div class="app">
+
+  <!-- ========== 標題畫面 ========== -->
+  <section id="screen-title" class="screen active">
+    <div class="title-badge">黎深生日企劃</div>
+    <h1 class="title-main">0905<br>SNOW FESTIVAL</h1>
+    <div class="title-sub">目標：溫泉旅行!</div>
+
+    <div class="stage">
+      <!-- 可替換：已改用你自己的雪人圖片 -->
+      <img src="img/snowman.gif" class="snowman">
+    </div>
+
+    <button class="btn progress-btn" id="title-progress" onclick="openGallery()">📖 CG回顧　收藏 0／6</button>
+
+    <div class="title-actions" id="title-actions-row">
+      <button class="btn primary" id="btn-start" onclick="startSequence()">競賽開始</button>
+      <button class="btn" id="reset-btn" onclick="confirmReset()" style="display:none;">重新遊玩</button>
+    </div>
+  </section>
+
+  <!-- （角色造型選擇功能已移除，統一使用基本玩家形象） -->
+
+  <!-- ========== 雕刻遊戲 ========== -->
+  <section id="screen-carving" class="screen" onclick="chip()">
+    <div class="top-row">
+      <button class="back-btn" onclick="leaveCarving()">←</button>
+      <div class="lv-title-row">
+        <h2 class="screen-title-text" id="carve-title">馬卡龍</h2>
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:var(--ice-deep);" id="carve-step"></div>
+      </div>
+      <span style="width:38px;"></span>
+    </div>
+
+    <div class="carve-header">
+      <div>
+        <div class="bar-label"><span>⏱ 剩餘時間</span><span id="timer-num">30s</span></div>
+        <div class="timer-bar-outer"><div class="timer-bar-inner" id="timer-bar"></div></div>
+      </div>
+      <div>
+        <div class="bar-label"><span>🧊 完成進度</span><span id="progress-num">0%</span></div>
+        <div class="progress-bar-outer"><div class="progress-bar-inner" id="progress-bar"></div></div>
+      </div>
+    </div>
+
+    <div class="carve-stage">
+      <!-- 可替換：把 .carver-body / .carver-head 換成 <img src="角色插畫.png"> 即可置換成真實角色美術 -->
+      <div class="carver left">
+        <div class="carver-figure">
+          <div class="carver-body"></div>
+          <div class="carver-head"><div class="carver-hair"></div></div>
+          <img class="carver-photo lv-photo" alt="" draggable="false" onerror="this.style.display='none'; this.closest('.carver-figure').classList.remove('has-photo');">
+          <span class="carver-tool" id="tool-left">⛏️</span>
+        </div>
+      </div>
+
+      <div class="ice-column">
+        <div class="ice-block-wrap" id="ice-block">
+          <div class="sculpture-final" id="sculpture-final"></div>
+          <svg class="sculpture-ice" id="sculpture-ice" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <rect x="0" y="0" width="100" height="100" fill="url(#iceGrad)"/>
+            <path class="crack" id="crack1" d="M20 10 L38 45 L15 60" stroke="#dff2fb" stroke-width="2" fill="none"/>
+            <path class="crack" id="crack2" d="M85 20 L60 40 L78 70" stroke="#dff2fb" stroke-width="2" fill="none"/>
+            <path class="crack" id="crack3" d="M30 85 L55 60 L75 90" stroke="#dff2fb" stroke-width="2" fill="none"/>
+            <defs>
+              <linearGradient id="iceGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ffffff"/>
+                <stop offset="1" stop-color="#bfe6f7"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="event-banner" id="event-banner"></div>
+        </div>
+      </div>
+
+      <div class="carver right">
+        <div class="carver-figure">
+          <div class="carver-body"></div>
+          <div class="carver-head player-head" id="player-head"><div class="carver-hair player-hair"></div></div>
+          <img class="carver-photo player-photo" alt="" draggable="false" onerror="this.style.display='none'; this.closest('.carver-figure').classList.remove('has-photo');">
+          <span class="carver-tool" id="tool-right">⛏️</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="carve-hint">點擊畫面任何地方，或按下 <b>空白鍵</b> 努力雕刻吧！保持穩定節奏，單純瘋狂點擊是不行的</div>
+  </section>
+
+</div>
+
+<!-- （角色造型選擇功能已移除，僅保留基本玩家形象） -->
+
+<!-- ========== 玩家姓名輸入彈窗 ========== -->
+<div class="overlay" id="overlay-name">
+  <div class="card">
+    <div class="secret-header" style="margin-bottom:10px;">
+      <div class="secret-title" style="font-size:19px;">在開始之前</div>
+    </div>
+    <p style="text-align:center;font-size:13px;">您的姓名<br>輸入姓名後，劇情台詞會自動替換<br>留空的話就用預設的「你」。</p>
+    <input type="text" id="name-input" maxlength="12" placeholder="輸入你的名字（可留空）"
+      style="width:100%; box-sizing:border-box; margin:10px 0 14px; padding:11px 14px; border-radius:10px; border:1.5px solid var(--ice-light); font-family:var(--font-body); font-size:15px; color:var(--ice-ink); outline:none;">
+    <button class="btn primary" style="width:100%;" onclick="confirmName()">確認，進入雪絨鎮</button>
+  </div>
+</div>
+
+<!-- ========== 提示彈窗（每關開始前） ========== -->
+<div class="overlay" id="overlay-tip">
+  <div class="card">
+    <img src="img/snowbubble.png" class="tip-mascot" alt="" width="76" height="76"
+         onerror="this.style.display='none'; document.getElementById('tip-mascot-fallback').style.display='block';">
+    <svg id="tip-mascot-fallback" class="tip-mascot" width="76" height="76" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+      <ellipse cx="50" cy="90" rx="26" ry="5" fill="var(--ice-light)" opacity=".5"/>
+      <!-- 小手舉牌 -->
+      <rect x="70" y="34" width="22" height="17" rx="3" fill="#fff" stroke="var(--ice-deep)" stroke-width="2"/>
+      <path d="M76 40 L80 44 L87 37" stroke="var(--accent-pink-deep)" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="70" y1="52" x2="60" y2="60" stroke="var(--ice-deep)" stroke-width="4" stroke-linecap="round"/>
+      <!-- 身體 -->
+      <circle cx="48" cy="56" r="30" fill="#fff" stroke="var(--ice-light)" stroke-width="3"/>
+      <!-- 左手 -->
+      <line x1="24" y1="58" x2="14" y2="50" stroke="var(--ice-deep)" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="12" cy="48" r="5" fill="#fff" stroke="var(--ice-light)" stroke-width="2"/>
+      <!-- 毛帽 -->
+      <path d="M22 34 Q48 6 74 34 Q60 26 48 26 Q36 26 22 34 Z" fill="var(--accent-pink)"/>
+      <circle cx="48" cy="22" r="7" fill="#fff" stroke="var(--ice-light)" stroke-width="2"/>
+      <!-- 表情 -->
+      <circle cx="38" cy="54" r="3" fill="var(--ice-ink)"/>
+      <circle cx="58" cy="54" r="3" fill="var(--ice-ink)"/>
+      <ellipse cx="33" cy="63" rx="5" ry="3" fill="var(--accent-pink)" opacity=".6"/>
+      <ellipse cx="63" cy="63" rx="5" ry="3" fill="var(--accent-pink)" opacity=".6"/>
+      <path d="M40 64 Q48 70 56 64" stroke="var(--ice-ink)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    </svg>
+    <h3 id="tip-title" style="text-align:center;">題目說明</h3>
+    <div class="tip-bubble"><p id="tip-body">提示內容</p></div>
+    <p style="text-align:center;font-size:12px;color:var(--ice-deep);">點擊冰塊／工具圖示，或按空白鍵開始雕刻。 30 秒內填滿進度，作品完成！</p>
+    <button class="btn primary" onclick="startCarving()" style="width:100%;margin-top:6px;">開始雕刻</button>
+  </div>
+</div>
+
+<!-- ========== 失敗彈窗 ========== -->
+<div class="overlay" id="overlay-fail">
+  <div class="card">
+    <img class="fail-photo" id="fail-photo" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <div class="fail-emoji" id="fail-emoji" style="display:none;">❄️💦</div>
+    <h3>雕刻來不及完成……</h3>
+    <p style="text-align:center;">時間到了，再挑戰一次吧！</p>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button class="btn" onclick="closeOverlay('overlay-fail'); showScreen('screen-title'); render();">回到首頁</button>
+      <button class="btn primary" onclick="closeOverlay('overlay-fail'); openTip();">再次挑戰</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 劇情對話彈窗 ========== -->
+<div class="overlay" id="overlay-story">
+  <div class="card">
+    <h3 id="story-title">雪雕完成！</h3>
+    <div class="cg-frame" id="story-cg-frame">
+      <img class="cg-photo" id="story-cg-img" alt="">
+      <div class="cg-glyph" id="story-cg-glyph">🖼️</div>
+      <div class="cg-caption" id="story-cg-caption">CG 場景（可置換為正式插圖）</div>
+    </div>
+    <div class="dialogue-box">
+      <div class="dialogue-speaker" id="story-speaker"> </div>
+      <div class="dialogue-text" id="story-text">對話內容</div>
+    </div>
+    <div class="dialogue-actions">
+      <button class="btn small" id="story-prev" onclick="storyPrev()">BACK</button>
+      <button class="btn primary small" id="story-next" onclick="storyNext()">NEXT</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== CG 收藏冊 ========== -->
+<div class="overlay" id="overlay-gallery">
+  <div class="card" style="max-width:460px;">
+    <h3>🎨 CG 收藏冊</h3>
+    <p style="text-align:center;">完成題目即可解鎖對應的劇情回憶</p>
+    <div class="cg-grid" id="cg-grid"></div>
+    <button class="btn" style="width:100%;margin-top:16px;" onclick="closeOverlay('overlay-gallery')">關閉</button>
+  </div>
+</div>
+
+<!-- ========== 秘密結局 ========== -->
+<div class="overlay" id="overlay-secret">
+  <div class="card secret-card">
+    <div class="secret-header">
+      <div class="secret-title">❄恭喜通關❄</div>
+      <button class="back-btn secret-close" onclick="closeOverlay('overlay-secret'); showScreen('screen-title'); render();" title="返回首頁">✕</button>
+    </div>
+    <a class="cg-frame" id="secret-cg-frame" href="secret-album.html" target="_blank" rel="noopener"
+       style="background:linear-gradient(150deg,#fff5fa,var(--ice-pale)); text-decoration:none; color:inherit; cursor:pointer;">
+      <img class="cg-photo" id="secret-cg-img" alt="">
+      <div class="cg-glyph">💗🧊</div>
+      <div class="cg-caption">秘密結局 CG（可置換為正式插圖）</div>
+    </a>
+    <div class="cg-link-hint">點開上方圖片，打開花絮相簿 →</div>
+    <div class="dialogue-box" id="secret-box">
+      <div class="dialogue-speaker" id="secret-speaker">黎深</div>
+      <div class="dialogue-text" id="secret-text">……</div>
+    </div>
+    <div class="dialogue-actions center">
+      <button class="btn pink small" id="secret-next" onclick="secretNext()">NEXT</button>
+    </div>
+    <div class="author-box" id="author-box" style="display:none;">
+      本作品為《戀與深空》同人創作，非商業、僅供粉絲交流。<br>
+      故事 / 企劃 / 網頁製作：Tsang（請自行替換為您的暱稱或連結）<br>
+      —— 生日快樂，黎深 🎂 ——
+      <div class="author-actions">
+        <button class="btn primary small" onclick="closeOverlay('overlay-secret'); showScreen('screen-title'); render();">返回首頁</button>
+        <button class="btn small" onclick="if(confirm('確定要清空所有進度，重新挑戰一次嗎？此動作將無法復原。')){ resetGame(); closeOverlay('overlay-secret'); showScreen('screen-title'); }">🔄 清空進度重玩</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================= 資料設定區（可自由修改文字內容） ================= */
+const LEVELS = [
+  {
+    id:0, key:'macaron', name:'馬卡龍', en:'MACARON', event:'melt',
+    tip:'竟然出了太陽！冰最怕熱！太陽照射冰塊就會開始融化，進度會緩緩往下掉，動作要快、下手要穩～',
+    finalColor:'#ffb9d6', shape:'macaron',
+    sculptureImg:'assets/sculpture-macaron.png', cgImg:'assets/cg-macaron.jpg',
+    dialogue:[
+      {speaker:'主持人', text:'這是熱身題目，雖然有太陽，但雪雕馬卡龍形狀簡單，參加者都如期完成了。'},
+      {speaker:'黎深', text:'……雕得不錯，尤其馬卡龍的裙邊，看起來很好吃。'},
+      {speaker:'你', text:'畢竟雕的時候，想的都是你吃馬卡龍瞇起眼睛的樣子。'},
+      {speaker:'黎深', text:'看來成果不錯。下一題要開始了，準備。'}
+    ],
+    cg:'🍬'
+  },
+  {
+    id:1, key:'jasmine', name:'花卉', en:'FLOWER', event:'assist',
+    tip:'花瓣不好做，不過別擔心，黎深最是手巧，而且還會悄悄用Evol幫點忙！',
+    finalColor:'#ffffff', shape:'jasmine',
+    sculptureImg:'assets/sculpture-jasmine.png', cgImg:'assets/cg-jasmine.jpg',
+    dialogue:[
+      {speaker:'評審', text:'雪白的茉莉雪雕幾乎透明，花瓣薄得像真的一樣。'},
+      {speaker:'黎深', text:'謝謝評審的稱讚。'},
+      {speaker:'你', text:'(小聲)黎深，你是不是...偷偷用Evol幫我補了剛才崩掉的地方?'},
+      {speaker:'黎深', text:'沒有偷偷，是正大光明的補了，評審剛好沒看見。'}
+    ],
+    cg:'🌼'
+  },
+  {
+    id:2, key:'fox', name:'狐狸', en:'FOX “LIUBING”', event:'cold',
+    tip:'天氣忽然降溫，手指凍僵變得不太靈活，雕刻的力道會變弱，請耐心多敲幾下！',
+    finalColor:'#f6a860', shape:'fox',
+    sculptureImg:'assets/sculpture-fox.png', cgImg:'assets/cg-fox.jpg',
+    dialogue:[
+      {speaker:'主持人', text:'參賽者的狐狸雪雕都完成了，各種形狀的狐狸都有，有請評審－－。'},
+      {speaker:'黎深', text:'雕得跟六餅很像，你的觀察力果然細緻入微。'},
+      {speaker:'你', text:'我可沒有少跟六餅玩'},
+      {speaker:'黎深', text:'不過這樣看起來六餅比一般的狐狸胖了點，回去要實行飲食控制。'},
+      {speaker:'你', text:'可憐的六餅...'},
+    ],
+    cg:'🦊'
+  },
+  {
+    id:3, key:'bust', name:'重要的人', en:'A PORTRAIT OF YOU', event:'assist',
+    tip:'題目是「重要的人」，你專注地盯著眼前的「目標」。',
+    finalColor:'#ffd3e4', shape:'bust',
+    sculptureImg:'assets/sculpture-bust.png', cgImg:'assets/cg-bust.jpg',
+    dialogue:[
+      {speaker:'主持人', text:'這次的題目是「重要的人」，不限於情侶關係，讓我們看看完成的作品。'},
+      {speaker:'黎深', text:'雕得不錯，但旁邊這些企鵝...'},
+      {speaker:'你', text:'只有你一個多孤單，補些企鵝給小黎壯壯膽。'},
+      {speaker:'黎深', text:'我都不知道我什麼時候變成企鵝集團的老大了。'},
+      {speaker:'你', text:'什麼時候不重要，即刻上任也可以。'},
+      {speaker:'黎深', text:'這樣不如直接加個你...你的手都凍紅了，到我口袋暖暖。'}
+    ],
+    cg:'🕊️'
+  },
+  {
+    id:4, key:'cannon', name:'自由發揮', trueName:'阿姆斯特朗回旋加速式阿姆斯特朗炮', en:'???', event:'chaos',
+    tip:'最終題：「不限主題，自由發揮！」融化、降溫、神秘協助都可能隨機發生——這是最具挑戰性的一關，請做好心理準備。',
+    finalColor:'#ffcf5c', shape:'cannon',
+    sculptureImg:'assets/sculpture-cannon.png', cgImg:'assets/cg-cannon.jpg',
+    gag:true,
+    dialogue:[
+      {speaker:'', text:'展示作品時全場鴉雀無聲。雪雕台上聳立的，是一座造型誇張、閃著金屬光澤的巨型冰砲。'},
+      {speaker:'主持人', text:'……這件作品的名稱是？'},
+      {speaker:'你', text:'阿姆斯特朗回旋加速式阿姆斯特朗炮。'},
+      {speaker:'主持人', text:'（推了推眼鏡）你是說「新阿姆斯特朗旋風噴射阿姆斯特朗砲」吧？據傳是戌威族用來炸毀江戶城天守閣、逼迫江戶開城的決戰兵器。'},
+      {speaker:'你', text:'……你怎麼比我還清楚，O魂看很熟?'},
+      {speaker:'主持人', text:'身為主持人，這點小事怎麼會不知道。這做的真好啊。'},
+      {speaker:'黎深', text:'（扶額）……你們兩個是認真的嗎。'},
+      {speaker:'你', text:'規則只說自由發揮，我很自由。'},
+      {speaker:'黎深', text:'……算了。大家都笑了，不虧。'}
+    ],
+    cg:'💥'
+  }
+];
+/* 開頭介紹與秘密結局的劇情CG圖片路徑 */
+const INTRO_CG_IMG  = 'assets/cg-intro.jpg';
+const SECRET_CG_IMG = 'assets/cg-secret.jpg';
+const FAIL_IMG = 'assets/fail.jpg';
+
+const SPECIAL_LABELS = {
+  melt:{icon:'🔥', text:'快速融化中！試圖拯救冰塊！'},
+  assist:{icon:'💗', text:'黎深偷偷用了Evol！'},
+  cold:{icon:'❄️', text:'氣溫驟降，冰變得很硬'}
+};
+
+/* ================= 遊戲狀態 ================= */
+let state = {
+  unlocked: JSON.parse(localStorage.getItem('lishen_ice_unlocked') || '[]'),
+  secretSeen: localStorage.getItem('lishen_ice_secret') === '1'
+};
+let playerName = localStorage.getItem('lishen_ice_player_name') || '你';
+
+/* ================= 角色造型 ================= */
+/* 基本玩家形象：內建小人使用下列固定髮色／瞳色（沒有放圖片時的備援樣式） */
+const PLAYER_HAIR = '#4a3428';
+const PLAYER_EYE  = '#3a2a1a';
+
+/* 自訂角色插圖（待機／打擊各一張）：填入路徑後會自動蓋掉內建小人造型；
+   點擊鑿冰（按下）時切換成「打擊圖」，放開後自動切回「待機圖」。留空則使用內建造型。 */
+const PLAYER_IMG_IDLE   = 'assets/player-idle.png';   // 例如 'assets/player-idle.png'
+const PLAYER_IMG_STRIKE = 'assets/player-strike.png';   // 例如 'assets/player-strike.png'
+const ZAYNE_IMG_IDLE    = 'assets/zayne-idle.png';   // 例如 'assets/zayne-idle.png'
+const ZAYNE_IMG_STRIKE  = 'assets/zayne-strike.png';   // 例如 'assets/zayne-strike.png'
+
+function setPlayerFrame(state){
+  const path = (state==='strike') ? PLAYER_IMG_STRIKE : PLAYER_IMG_IDLE;
+  document.querySelectorAll('.player-photo').forEach(img=>{
+    const figure = img.closest('.carver-figure');
+    if(path){ img.src = path; if(figure) figure.classList.add('has-photo'); }
+    else { img.removeAttribute('src'); img.style.display='none'; if(figure) figure.classList.remove('has-photo'); }
+  });
+}
+function setZayneFrame(state){
+  const path = (state==='strike') ? ZAYNE_IMG_STRIKE : ZAYNE_IMG_IDLE;
+  document.querySelectorAll('.lv-photo').forEach(img=>{
+    const figure = img.closest('.carver-figure');
+    if(path){ img.src = path; if(figure) figure.classList.add('has-photo'); }
+    else { img.removeAttribute('src'); img.style.display='none'; if(figure) figure.classList.remove('has-photo'); }
+  });
+}
+function applyAppearance(){
+  document.documentElement.style.setProperty('--player-hair', PLAYER_HAIR);
+  document.documentElement.style.setProperty('--player-eye', PLAYER_EYE);
+  setPlayerFrame('idle');
+}
+function applyCustomArt(){
+  setZayneFrame('idle');
+}
+applyAppearance();
+applyCustomArt();
+/* 按下鑿冰（滑鼠/觸控/空白鍵）時切換玩家為打擊圖，放開後切回待機圖 */
+(function(){
+  const stage = document.getElementById('screen-carving');
+  if(!stage) return;
+  const press = ()=>{ if(carvingActive) setPlayerFrame('strike'); };
+  const release = ()=>{ setPlayerFrame('idle'); };
+  stage.addEventListener('mousedown', e=>{ e.preventDefault(); press(); });
+  stage.addEventListener('touchstart', press, {passive:true});
+  stage.addEventListener('mouseup', release);
+  stage.addEventListener('mouseleave', release);
+  stage.addEventListener('touchend', release);
+  stage.addEventListener('touchcancel', release);
+  stage.addEventListener('selectstart', e=>e.preventDefault());
+  stage.addEventListener('dragstart', e=>e.preventDefault());
+  document.addEventListener('keydown', e=>{
+    if(e.code==='Space' && carvingActive && !e.repeat) setPlayerFrame('strike');
+  });
+  document.addEventListener('keyup', e=>{
+    if(e.code==='Space') setPlayerFrame('idle');
+  });
+})();
+(function(){
+  const img = document.getElementById('secret-cg-img');
+  const frame = document.getElementById('secret-cg-frame');
+  if(SECRET_CG_IMG){
+    img.onload = ()=>frame.classList.add('has-photo');
+    img.onerror = ()=>frame.classList.remove('has-photo');
+    img.src = SECRET_CG_IMG;
+  }
+})();
+(function(){
+  if(FAIL_IMG){ document.getElementById('fail-photo').src = FAIL_IMG; }
+})();
+
+let cur = null;           // 目前挑戰的關卡資料
+let progress = 0;
+let timeLeft = 30;
+let timerId = null;
+let eventTimerId = null;
+let idleCarveId = null;
+let clickPower = 4;
+let lastChip = 0;
+let carvingActive = false;  // 是否正在進行鑿冰，避免過關瞬間的殘留點擊誤觸下一關
+let chaosMode = null;
+let storyQueue = [];
+let storyIdx = 0;
+let storyOnDone = null;
+let storyAdvancing = false;
+
+function saveState(){
+  localStorage.setItem('lishen_ice_unlocked', JSON.stringify(state.unlocked));
+  localStorage.setItem('lishen_ice_secret', state.secretSeen ? '1':'0');
+}
+
+/* ================= 畫面切換 ================= */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function openOverlay(id){ document.getElementById(id).classList.add('active'); }
+function closeOverlay(id){ document.getElementById(id).classList.remove('active'); }
+
+function getNextLevel(){
+  return LEVELS.find(l=>!state.unlocked.includes(l.id)) || null;
+}
+function startSequence(){
+  if(localStorage.getItem('lishen_ice_name_set') !== '1'){ openNameModal(); return; }
+  proceedToGame();
+}
+function openNameModal(){
+  document.getElementById('name-input').value = '';
+  openOverlay('overlay-name');
+  setTimeout(()=>document.getElementById('name-input').focus(), 150);
+}
+function confirmName(){
+  const val = document.getElementById('name-input').value.trim();
+  playerName = val ? val.slice(0,12) : '你';
+  localStorage.setItem('lishen_ice_player_name', playerName);
+  localStorage.setItem('lishen_ice_name_set', '1');
+  closeOverlay('overlay-name');
+  proceedToGame();
+}
+function proceedToGame(){
+  const next = getNextLevel();
+  if(next){
+    if(next.id===0 && localStorage.getItem('lishen_ice_intro_seen')!=='1'){ playIntro(); }
+    else { enterLevel(next.id); }
+  }
+  else if(!state.secretSeen){ playSecretEnding(false); }
+  else { playSecretEnding(true); }
+}
+
+/* 共用：設定劇情CG卡片內容，imgPath 有值且能載入時顯示圖片，否則顯示emoji佔位 */
+function setStoryCG(imgPath, glyph, caption){
+  const frame = document.getElementById('story-cg-frame');
+  const img = document.getElementById('story-cg-img');
+  document.getElementById('story-cg-glyph').textContent = glyph;
+  document.getElementById('story-cg-caption').textContent = caption;
+  frame.classList.remove('has-photo');
+  if(imgPath){
+    img.onerror = ()=>{ frame.classList.remove('has-photo'); };
+    img.onload = ()=>{ frame.classList.add('has-photo'); };
+    img.src = imgPath;
+  } else {
+    img.removeAttribute('src');
+  }
+}
+
+/* ================= 開頭劇情：雪絨鎮慶典介紹 ================= */
+const INTRO_LINES = [
+  {speaker:'', text:'結束克羅城支援後，兩人決定到雪絨鎮度假順便探望方老師。'},
+  {speaker:'', text:'而長年被雪覆蓋的雪絨鎮，冬季總是從著名的冬日慶典開始，絨花大道上充滿了遊客與冰燈，人潮穿梭在店鋪的裝飾間，其中還飄著熱可可跟各種甜蜜的香氣。'},
+  {speaker:'', text:'而今年慶典多了新活動，全新登場的「雪雕大賽」，優勝者能得到溫泉旅行大獎。'},
+  {speaker:'你', text:'溫泉旅行！黎深，我們一定要報名！'},
+  {speaker:'黎深', text:'前陣子不是才剛去過?如果是想再去溫泉放鬆，我們可以再找個...'},
+  {speaker:'你', text:'溫泉旅行當然可以安排，但如果是大賽的獎勵就更開心了'},
+  {speaker:'黎深', text:'那就參加吧。'},
+  {speaker:'', text:'於是兩人的名字，寫進了本屆雪絨鎮雪雕大賽的參賽名單。'}
+];
+function playIntro(){
+  storyQueue = INTRO_LINES;
+  storyIdx = 0;
+  storyAdvancing = false;
+  document.getElementById('story-title').textContent = '雪絨鎮冬季慶典';
+  setStoryCG(INTRO_CG_IMG, '🎪❄️', '雪絨鎮冬季慶典 CG（可置換為正式插圖）');
+  storyOnDone = ()=>{
+    closeOverlay('overlay-story');
+    localStorage.setItem('lishen_ice_intro_seen','1');
+    const next = getNextLevel();
+    if(next){ enterLevel(next.id); }
+  };
+  renderStoryLine();
+  openOverlay('overlay-story');
+}
+function leaveCarving(){
+  carvingActive = false;
+  clearInterval(timerId); clearInterval(eventTimerId); clearTimeout(idleCarveId);
+  showScreen('screen-title'); render();
+}
+function openGallery(){ renderGallery(); openOverlay('overlay-gallery'); }
+
+/* ================= 初始渲染 ================= */
+function render(){
+  document.getElementById('title-progress').textContent =
+    `📖 CG回顧　收藏 ${state.unlocked.length} ／ ${LEVELS.length+1}`;
+  const allDone = state.unlocked.length >= LEVELS.length && state.secretSeen;
+  document.getElementById('reset-btn').style.display = allDone ? 'inline-flex' : 'none';
+  document.getElementById('btn-start').textContent = allDone ? '回顧結局' : '🔨 開始遊戲';
+}
+function confirmReset(){
+  if(confirm('確定要清空所有收藏進度，重新挑戰一次嗎？此動作無法復原。')){
+    resetGame();
+  }
+}
+function resetGame(){
+  state = { unlocked: [], secretSeen: false };
+  saveState();
+  render();
+}
+
+function renderGallery(){
+  const grid = document.getElementById('cg-grid');
+  grid.innerHTML = '';
+  LEVELS.forEach(lv=>{
+    const unlocked = state.unlocked.includes(lv.id);
+    const div = document.createElement('div');
+    div.className = 'cg-thumb' + (unlocked?'':' locked');
+    if(unlocked && lv.cgImg){
+      div.innerHTML = `<img class="cg-thumb-img" src="${lv.cgImg}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><div class="glyph" style="display:none;">${lv.cg}</div><div class="name">${lv.trueName||lv.name}</div>`;
+    } else {
+      div.innerHTML = `<div class="glyph">${unlocked? lv.cg : '❓'}</div><div class="name">${unlocked? (lv.trueName||lv.name) : '未解鎖'}</div>`;
+    }
+    if(unlocked){ div.onclick = ()=>{ closeOverlay('overlay-gallery'); replayStory(lv); }; }
+    grid.appendChild(div);
+  });
+  const secretDiv = document.createElement('div');
+  const secretDone = state.secretSeen;
+  secretDiv.className = 'cg-thumb' + (secretDone?'':' locked');
+  if(secretDone && SECRET_CG_IMG){
+    secretDiv.innerHTML = `<img class="cg-thumb-img" src="${SECRET_CG_IMG}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><div class="glyph" style="display:none;">💗🧊</div><div class="name">秘密結局</div>`;
+  } else {
+    secretDiv.innerHTML = `<div class="glyph">${secretDone? '💗🧊' : '❓'}</div><div class="name">${secretDone? '秘密結局' : '未解鎖'}</div>`;
+  }
+  if(secretDone){ secretDiv.onclick = ()=>{ closeOverlay('overlay-gallery'); playSecretEnding(true); }; }
+  grid.appendChild(secretDiv);
+}
+
+/* ================= 圖示（簡易 SVG 佔位插畫，可自行替換） ================= */
+function iconSVG(shape, color, size){
+  const s = size;
+  switch(shape){
+    case 'macaron':
+      return `<svg width="${s}" height="${s}" viewBox="0 0 100 100"><ellipse cx="50" cy="30" rx="34" ry="20" fill="${color}"/><rect x="20" y="46" width="60" height="14" rx="7" fill="#fff6e9"/><ellipse cx="50" cy="70" rx="34" ry="20" fill="${color}"/></svg>`;
+    case 'jasmine':
+      return `<svg width="${s}" height="${s}" viewBox="0 0 100 100">
+        ${[0,60,120,180,240,300].map(a=>`<ellipse cx="50" cy="28" rx="12" ry="20" fill="${color}" stroke="#e3e3e3" stroke-width="1" transform="rotate(${a} 50 50)"/>`).join('')}
+        <circle cx="50" cy="50" r="10" fill="#ffe27a"/></svg>`;
+    case 'fox':
+      return `<svg width="${s}" height="${s}" viewBox="0 0 100 100"><path d="M20 20 L38 42 L14 46 Z" fill="${color}"/><path d="M80 20 L62 42 L86 46 Z" fill="${color}"/><ellipse cx="50" cy="55" rx="32" ry="28" fill="${color}"/><ellipse cx="50" cy="62" rx="16" ry="13" fill="#fff"/><circle cx="40" cy="50" r="3" fill="#2b1a10"/><circle cx="60" cy="50" r="3" fill="#2b1a10"/><ellipse cx="50" cy="62" rx="3" ry="2" fill="#2b1a10"/></svg>`;
+    case 'bust':
+      return `<svg width="${s}" height="${s}" viewBox="0 0 100 100"><path d="M25 85 Q25 55 50 55 Q75 55 75 85 Z" fill="${color}"/><circle cx="50" cy="38" r="20" fill="${color}"/><path d="M30 30 Q50 5 70 30 Q72 45 65 50 Q68 30 50 25 Q32 30 35 50 Q28 45 30 30 Z" fill="#8a6a55"/><path d="M62 78 L70 70 M38 78 L30 70" stroke="#ff9fc7" stroke-width="3" stroke-linecap="round"/></svg>`;
+    case 'cannon':
+      return `<svg width="${s}" height="${s}" viewBox="0 0 100 100"><rect x="15" y="55" width="70" height="18" rx="8" fill="${color}"/><circle cx="25" cy="80" r="10" fill="#7a5a2a"/><circle cx="55" cy="80" r="10" fill="#7a5a2a"/><rect x="55" y="40" width="34" height="14" rx="6" fill="${color}" transform="rotate(-18 55 47)"/><path d="M78 20 L82 30 L92 32 L84 39 L86 49 L78 43 L70 49 L72 39 L64 32 L74 30 Z" fill="#ff5d5d"/></svg>`;
+    default:
+      return `<svg width="${s}" height="${s}" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="${color}"/></svg>`;
+  }
+}
+
+/* ================= 進入關卡（提示） ================= */
+function enterLevel(id){
+  cur = LEVELS.find(l=>l.id===id);
+  openTip();
+}
+function openTip(){
+  const stepNum = LEVELS.findIndex(l=>l.id===cur.id)+1;
+  document.getElementById('tip-title').textContent = `第 ${stepNum}／${LEVELS.length} 題：${cur.name}`;
+  document.getElementById('tip-body').textContent = cur.tip;
+  openOverlay('overlay-tip');
+}
+
+/* ================= 開始鑿冰 ================= */
+function startCarving(){
+  closeOverlay('overlay-tip');
+  showScreen('screen-carving');
+  setPlayerFrame('idle');
+  setZayneFrame('idle');
+  document.getElementById('carve-title').textContent = cur.name;
+  document.getElementById('carve-step').textContent = `第 ${LEVELS.findIndex(l=>l.id===cur.id)+1}／${LEVELS.length} 題`;
+  const sculptureEl = document.getElementById('sculpture-final');
+  if(cur.sculptureImg){
+    const img = document.createElement('img');
+    img.src = cur.sculptureImg;
+    img.alt = '';
+    img.draggable = false;
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none;';
+    img.onerror = function(){
+      sculptureEl.innerHTML = iconSVG(cur.shape, cur.finalColor, 190).replace('width="190" height="190"','width="100%" height="100%"');
+    };
+    sculptureEl.innerHTML = '';
+    sculptureEl.appendChild(img);
+  } else {
+    sculptureEl.innerHTML = iconSVG(cur.shape, cur.finalColor, 190).replace('width="190" height="190"','width="100%" height="100%"');
+  }
+  document.getElementById('sculpture-ice').style.opacity = 1;
+  ['crack1','crack2','crack3'].forEach(id=>document.getElementById(id).style.opacity=0);
+  progress = 0; timeLeft = 30; clickPower = 4; lastChip = 0;
+  carvingActive = true;
+  updateBars();
+  clearInterval(timerId); clearInterval(eventTimerId); clearTimeout(idleCarveId);
+
+  timerId = setInterval(()=>{
+    timeLeft -= 0.1;
+    if(timeLeft<=0){ timeLeft=0; endAttempt(false); }
+    document.getElementById('timer-num').textContent = Math.ceil(timeLeft)+'s';
+    document.getElementById('timer-bar').style.width = (timeLeft/30*100)+'%';
+  }, 100);
+
+  scheduleIdleCarve();
+  runSpecialEvent(cur.event);
+}
+
+/* 黎深在旁邊也會自己動手鑿冰，純視覺效果，讓兩人像是一起雕刻 */
+function scheduleIdleCarve(){
+  clearTimeout(idleCarveId);
+  const delay = 1400 + Math.random()*1200;
+  idleCarveId = setTimeout(()=>{
+    if(timeLeft>0){ swingLeft(); scheduleIdleCarve(); }
+  }, delay);
+}
+
+function runSpecialEvent(type){
+  if(type==='melt'){
+    eventTimerId = setInterval(()=>{
+      if(progress>0 && timeLeft>0){
+        progress = Math.max(0, progress-6);
+        updateBars();
+        flashBanner('melt');
+      }
+    }, 1300);
+  } else if(type==='assist'){
+    eventTimerId = setInterval(()=>{
+      if(progress<100 && timeLeft>0){
+        progress = Math.min(100, progress+8);
+        updateBars();
+        flashBanner('assist');
+        if(progress>=100) endAttempt(true);
+      }
+    }, 4500);
+  } else if(type==='cold'){
+    eventTimerId = setInterval(()=>{
+      clickPower = 1;
+      flashBanner('cold');
+      setTimeout(()=>{ clickPower = 4; }, 2500);
+    }, 4000);
+  } else if(type==='chaos'){
+    const cycle = ['melt','assist','cold'];
+    let i=0;
+    eventTimerId = setInterval(()=>{
+      const t = cycle[i%cycle.length]; i++;
+      if(t==='melt'){ progress=Math.max(0,progress-10); flashBanner('melt'); }
+      else if(t==='assist'){ progress=Math.min(100,progress+11); flashBanner('assist'); }
+      else { clickPower=1; flashBanner('cold'); setTimeout(()=>{clickPower=4;},2000); }
+      updateBars();
+      if(progress>=100) endAttempt(true);
+    }, 2200);
+  }
+}
+
+function flashBanner(type){
+  const el = document.getElementById('event-banner');
+  el.className = 'event-banner show ' + type;
+  el.textContent = SPECIAL_LABELS[type].icon + ' ' + SPECIAL_LABELS[type].text;
+  clearTimeout(el._t);
+  el._t = setTimeout(()=>{ el.classList.remove('show'); }, 1400);
+  if(type==='melt'){ meltEffect(); }
+  else if(type==='assist'){ swingLeft(); assistSparkle(); }
+  else if(type==='cold'){ coldEffect(); }
+}
+function swingLeft(){
+  const tool = document.getElementById('tool-left');
+  if(tool){ tool.classList.remove('swing'); void tool.offsetWidth; tool.classList.add('swing'); }
+  setZayneFrame('strike');
+  clearTimeout(swingLeft._t);
+  swingLeft._t = setTimeout(()=>setZayneFrame('idle'), 220);
+}
+function meltEffect(){
+  const wrap = document.getElementById('ice-block');
+  if(!wrap) return;
+  wrap.classList.remove('evt-melt'); void wrap.offsetWidth; wrap.classList.add('evt-melt');
+  for(let i=0;i<3;i++){
+    const d = document.createElement('div');
+    d.className = 'drip';
+    d.style.left = (18+Math.random()*64)+'%';
+    d.style.top = (55+Math.random()*15)+'%';
+    wrap.appendChild(d);
+    setTimeout(()=>d.remove(), 780);
+  }
+}
+function coldEffect(){
+  document.querySelectorAll('.carver-figure').forEach(f=>{
+    f.classList.remove('shiver'); void f.offsetWidth; f.classList.add('shiver');
+  });
+  const wrap = document.getElementById('ice-block');
+  if(wrap){
+    const fl = document.createElement('div');
+    fl.className = 'frost-flash';
+    wrap.appendChild(fl);
+    setTimeout(()=>fl.remove(), 520);
+  }
+}
+function assistSparkle(){
+  const carver = document.querySelector('.carver.left .carver-figure');
+  if(!carver) return;
+  for(let i=0;i<3;i++){
+    const s = document.createElement('span');
+    s.className = 'sparkle';
+    s.textContent = '✨';
+    s.style.left = (8+Math.random()*38)+'px';
+    s.style.top = (Math.random()*26)+'px';
+    carver.appendChild(s);
+    setTimeout(()=>s.remove(), 640);
+  }
+}
+
+function chip(){
+  if(!carvingActive || !cur || timeLeft<=0) return;
+  const now = performance.now();
+  if(now - lastChip < 260) return;
+  lastChip = now;
+  progress = Math.min(100, progress + clickPower + Math.round(Math.random()*2-1));
+  updateBars();
+  const tool = document.getElementById('tool-right');
+  tool.classList.remove('swing'); void tool.offsetWidth; tool.classList.add('swing');
+  spawnShards();
+  if(progress>=100){ endAttempt(true); }
+}
+document.addEventListener('keydown', e=>{
+  if(e.code==='Space' && document.getElementById('screen-carving').classList.contains('active')){
+    e.preventDefault();
+    if(e.repeat) return;
+    chip();
+  }
+});
+
+function updateBars(){
+  document.getElementById('progress-num').textContent = Math.round(progress)+'%';
+  document.getElementById('progress-bar').style.width = progress+'%';
+  document.getElementById('sculpture-ice').style.opacity = Math.max(0, 1-progress/100);
+  document.getElementById('crack1').style.opacity = progress>25?1:0;
+  document.getElementById('crack2').style.opacity = progress>55?1:0;
+  document.getElementById('crack3').style.opacity = progress>80?1:0;
+}
+
+function spawnShards(){
+  const wrap = document.getElementById('ice-block');
+  for(let i=0;i<4;i++){
+    const s = document.createElement('div');
+    s.className = 'shard';
+    const x = 30+Math.random()*60, y = 30+Math.random()*60;
+    s.style.left = x+'%'; s.style.top = y+'%';
+    const sx = (Math.random()*80-40)+'px', sy=(Math.random()*-60-10)+'px', sr=(Math.random()*180-90)+'deg';
+    s.style.setProperty('--sx', sx); s.style.setProperty('--sy', sy); s.style.setProperty('--sr', sr);
+    s.style.animation = 'shard-fly .6s ease forwards';
+    wrap.appendChild(s);
+    setTimeout(()=>s.remove(), 650);
+  }
+}
+
+function endAttempt(success){
+  carvingActive = false;
+  clearInterval(timerId); clearInterval(eventTimerId); clearTimeout(idleCarveId);
+  const lv = cur;
+  if(success){
+    if(!state.unlocked.includes(lv.id)){ state.unlocked.push(lv.id); saveState(); }
+    setTimeout(()=>playStory(lv), 1400);
+  } else {
+    openOverlay('overlay-fail');
+  }
+}
+
+/* ================= 劇情播放 ================= */
+function playStory(lv){
+  storyQueue = lv.dialogue;
+  storyIdx = 0;
+  storyAdvancing = false;
+  document.getElementById('story-title').textContent = (lv.trueName||lv.name) + ' — 雪雕完成！';
+  setStoryCG(lv.cgImg, lv.cg, (lv.trueName||lv.name) + ' CG 場景（可置換為正式插圖）');
+  storyOnDone = ()=>{
+    closeOverlay('overlay-story');
+    const next = getNextLevel();
+    if(next){
+      setTimeout(()=>enterLevel(next.id), 250);
+    } else if(!state.secretSeen){
+      setTimeout(()=>playSecretEnding(false), 300);
+    } else {
+      showScreen('screen-title'); render();
+    }
+  };
+  renderStoryLine();
+  openOverlay('overlay-story');
+}
+function replayStory(lv){
+  storyQueue = lv.dialogue; storyIdx = 0;
+  storyAdvancing = false;
+  document.getElementById('story-title').textContent = (lv.trueName||lv.name) + ' — 劇情回顧';
+  setStoryCG(lv.cgImg, lv.cg, (lv.trueName||lv.name) + ' CG 場景（可置換為正式插圖）');
+  storyOnDone = ()=>{ closeOverlay('overlay-story'); };
+  renderStoryLine();
+  openOverlay('overlay-story');
+}
+function renderStoryLine(){
+  const line = storyQueue[storyIdx];
+  document.getElementById('story-speaker').textContent = line.speaker==='你' ? playerName : line.speaker;
+  document.getElementById('story-text').textContent = line.text;
+  document.getElementById('story-prev').disabled = storyIdx===0;
+  document.getElementById('story-next').textContent = (storyIdx===storyQueue.length-1) ? '完成' : '繼續';
+}
+function storyNext(){
+  if(storyAdvancing) return;
+  if(storyIdx < storyQueue.length-1){ storyIdx++; renderStoryLine(); }
+  else { storyAdvancing = true; storyOnDone && storyOnDone(); }
+}
+function storyPrev(){ if(storyIdx>0 && !storyAdvancing){ storyIdx--; renderStoryLine(); } }
+
+/* ================= 秘密結局 ================= */
+const SECRET_LINES = [
+  {speaker:'', text:'活動結束後，場地內三三兩兩聚集著遊客，跟場內的各種雪雕作品拍照聊天。'},
+  {speaker:'黎深', text:'走吧，方老師還在等我們回去吃飯。'},
+  {speaker:'你', text:'還是覺得很可惜，只拿到了參加獎。'},
+  {speaker:'黎深', text:'你盡力了。下次再來挑戰。'},
+  {speaker:'你', text:'也對，活動每年都有。 回去的時候順便買點鎮上的小吃回去吧'},
+  {speaker:'黎深', text:'來之前我就安排好了，還有特別訂的雪綿酥，等等一起帶回去。'},
+  {speaker:'你', text:'不愧是黎深，不過不能讓甜食的份額浪費在這，我還有準...啊。'},
+  {speaker:'黎深', text:'我會當作沒聽到，期待你的「驚喜」。'},
+  {speaker:'你', text:'黎深你真的是越來越壞了。'},
+  {speaker:'黎深', text:'但你喜歡。'},
+  {speaker:'你', text:'是，就是最喜歡你這個大雪人'},
+  {speaker:'', text:'夕陽將兩人的影子拉得很長，然後重合。'},
+];
+function playSecretEnding(replayOnly){
+  storyIdx = 0;
+  document.getElementById('author-box').style.display = 'none';
+  renderSecretLine();
+  openOverlay('overlay-secret');
+  if(!replayOnly){ state.secretSeen = true; saveState(); }
+}
+function renderSecretLine(){
+  const line = SECRET_LINES[storyIdx];
+  document.getElementById('secret-speaker').textContent = line.speaker==='你' ? playerName : line.speaker;
+  document.getElementById('secret-text').textContent = line.text;
+  document.getElementById('secret-next').textContent = (storyIdx===SECRET_LINES.length-1) ? '謝謝觀看' : 'NEXT';
+}
+function secretNext(){
+  if(storyIdx < SECRET_LINES.length-1){ storyIdx++; renderSecretLine(); }
+  else {
+    document.getElementById('secret-box').style.display='none';
+    document.getElementById('secret-next').style.display='none';
+    document.getElementById('author-box').style.display='block';
+  }
+}
+
+/* ================= 飄雪背景 ================= */
+(function initSnow(){
+  const wrap = document.getElementById('snowfall');
+  const chars = ['❄','❅','❆','•'];
+  for(let i=0;i<26;i++){
+    const f = document.createElement('div');
+    f.className = 'flake';
+    f.textContent = chars[Math.floor(Math.random()*chars.length)];
+    f.style.left = Math.random()*100+'%';
+    f.style.fontSize = (10+Math.random()*14)+'px';
+    f.style.setProperty('--drift', (Math.random()*60-30)+'px');
+    f.style.animationDuration = (8+Math.random()*10)+'s';
+    f.style.animationDelay = (Math.random()*10)+'s';
+    wrap.appendChild(f);
+  }
+})();
+
+render();
+</script>
+</body>
+</html>

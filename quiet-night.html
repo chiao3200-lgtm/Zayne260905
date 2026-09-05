@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>靜謐雪夜</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+<link rel="prefetch" href="secret-album.html">
+<link rel="prefetch" href="index.html">
+<style>
+:root{
+  --ice-pale:#eaf7fd; --ice-light:#c9e9f7; --ice-mid:#8fd0ef; --ice-deep:#4aa8d8;
+  --ice-navy:#1f4d73; --ice-ink:#123048; --accent-pink:#ff9fc7; --accent-pink-deep:#ef6fa5;
+  --accent-gold:#ffd97a; --shadow:rgba(31,77,115,.28);
+  --font-display:'DM Serif Display','Noto Serif TC',serif;
+  --font-body:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0; padding:0; height:100%; overflow:hidden;}
+body{
+  font-family:var(--font-body); color:#fff;
+  background:linear-gradient(180deg,#1a2c40,#0e1826 70%);
+  min-height:100vh; position:relative;
+}
+
+/* ===== 未成年警告閘門 ===== */
+.gate-overlay{position:fixed; inset:0; max-width:480px; margin-left:auto; margin-right:auto; z-index:100; background:rgba(10,16,26,.94); display:flex; align-items:center; justify-content:center; padding:20px;}
+.gate-card{background:#fff; color:var(--ice-ink); border-radius:22px; padding:26px 22px; max-width:360px; width:100%; text-align:center; box-shadow:0 16px 30px rgba(0,0,0,.4);}
+.gate-icon{font-size:40px; margin-bottom:6px;}
+.gate-kicker{font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-pink-deep); margin-bottom:8px;}
+.gate-card h2{font-family:var(--font-display); font-weight:400; font-size:20px; margin:0 0 10px; color:var(--accent-pink-deep);}
+.gate-card p{font-size:13px; line-height:1.8; color:var(--ice-ink); margin:0 0 18px;}
+.gate-actions{display:flex; flex-direction:column; gap:10px;}
+.btn{font-family:var(--font-display); font-size:15px; border:1.5px solid var(--ice-light); border-radius:10px; padding:11px 20px; cursor:pointer; background:#fff; color:var(--ice-navy); transition:background-color .12s ease, transform .1s ease;}
+.btn:hover{background:var(--ice-pale);}
+.btn:active{transform:translateY(1px);}
+.btn:focus-visible{outline:2px solid var(--accent-pink-deep); outline-offset:2px;}
+.btn.ghost{background:#f2f2f2; border-color:#f2f2f2; color:var(--ice-navy);}
+.btn.primary{background:var(--accent-pink-deep); border-color:var(--accent-pink-deep); color:#fff;}
+.btn.primary:hover{background:#e0578f;}
+
+/* ===== 沉浸式場景 ===== */
+.viewer{position:fixed; inset:0; max-width:480px; margin-left:auto; margin-right:auto; display:flex; align-items:center; justify-content:center; overflow:hidden;}
+.cg-stage{
+  position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+  background:radial-gradient(circle at 50% 30%, #2c4258, #0e1826 75%); cursor:pointer; user-select:none; overflow:hidden;
+}
+.cg-photo{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; opacity:0; transition:opacity .4s ease; z-index:1;}
+.cg-photo.show{opacity:1;}
+.cg-glyph{font-size:min(22vw,120px); filter:drop-shadow(0 0 24px rgba(255,255,255,.15)); transition:opacity .4s ease, transform .4s ease; position:relative; z-index:0;}
+.cg-glyph.fade{opacity:0; transform:scale(.94);}
+
+.top-bar{position:fixed; top:0; left:0; right:0; max-width:480px; margin-left:auto; margin-right:auto; z-index:20; display:flex; justify-content:space-between; padding:14px 14px 0; pointer-events:none;}
+.top-bar button{pointer-events:auto;}
+.icon-btn{width:38px; height:38px; border-radius:10px; border:none; background:rgba(255,255,255,.16); color:#fff; font-size:15px; cursor:pointer; backdrop-filter:blur(4px);}
+.icon-btn.wide{width:auto; padding:0 14px; border-radius:10px; font-family:var(--font-mono); font-size:12px; letter-spacing:.02em;}
+
+.dots{position:fixed; top:60px; left:0; right:0; max-width:480px; margin-left:auto; margin-right:auto; z-index:20; display:flex; align-items:center; justify-content:center; gap:8px; pointer-events:none; transition:opacity .3s ease;}
+.dot{width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.35);}
+.dot.active{background:#fff;}
+.page-count{position:fixed; top:74px; left:0; right:0; max-width:480px; margin-left:auto; margin-right:auto; z-index:20; text-align:center; font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; color:rgba(255,255,255,.55); pointer-events:none; transition:opacity .3s ease;}
+
+.dialogue-overlay{
+  position:fixed; left:0; right:0; bottom:0; max-width:480px; margin-left:auto; margin-right:auto; z-index:15; padding:18px 18px 26px;
+  background:linear-gradient(180deg, transparent, rgba(8,14,22,.92) 40%);
+  transition:opacity .3s ease, transform .3s ease;
+}
+.dialogue-overlay.hidden{opacity:0; transform:translateY(16px); pointer-events:none;}
+.dlg-speaker{font-family:var(--font-display); font-size:14px; color:var(--accent-pink); margin-bottom:6px;}
+.dlg-text{font-size:15px; line-height:1.9; max-width:480px; margin:0 auto; text-align:left;}
+.dlg-hint{text-align:center; font-family:var(--font-mono); font-size:11px; letter-spacing:.02em; color:rgba(255,255,255,.5); margin-top:14px;}
+
+/* ===== 結尾視窗 ===== */
+.overlay{position:fixed; inset:0; max-width:480px; margin-left:auto; margin-right:auto; z-index:60; background:rgba(10,16,26,.85); display:none; align-items:center; justify-content:center; padding:20px;}
+.overlay.active{display:flex;}
+.end-card{background:#fff; color:var(--ice-ink); border-radius:22px; padding:26px 22px; max-width:380px; width:100%; text-align:center; box-shadow:0 16px 30px rgba(0,0,0,.4);}
+.end-title{font-family:var(--font-display); font-size:20px; color:var(--accent-pink-deep); margin-bottom:6px;}
+.end-icon{font-size:34px; margin-bottom:6px;}
+.end-kicker{font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-pink-deep); margin-bottom:4px;}
+.author-box{font-size:11.5px; color:var(--ice-deep); line-height:1.9; padding-top:14px; margin-top:14px; border-top:1px dashed var(--ice-light);}
+.end-actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:16px;}
+.btn.small{padding:9px 16px; font-size:13px;}
+</style>
+</head>
+<body>
+
+<!-- 未成年警告 -->
+<div class="gate-overlay" id="gate">
+  <div class="gate-card">
+    <div class="gate-icon">🔞</div>
+    <div class="gate-kicker">Age Verification</div>
+    <h2>內容警告</h2>
+    <p>本頁面為番外劇情，內容涉及較為親密、偏向成人向的情節暗示。<br><br>請確認您已年滿 18 歲，並能自行為瀏覽此內容負責，再繼續閱讀。</p>
+    <div class="gate-actions">
+      <button class="btn primary" onclick="enterScene()">我已年滿 18 歲，繼續閱讀</button>
+      <button class="btn ghost" onclick="location.href='secret-album.html'">返回相簿</button>
+    </div>
+  </div>
+</div>
+
+<!-- 沉浸式場景 -->
+<div class="viewer">
+  <div class="top-bar">
+    <button class="icon-btn" onclick="location.href='secret-album.html'" title="返回相簿">✕</button>
+    <button class="icon-btn wide" id="toggle-btn" onclick="toggleUI()">👁 隱藏對話</button>
+  </div>
+  <div class="dots" id="dots"></div>
+  <div class="page-count" id="page-count"></div>
+
+  <div class="cg-stage" id="cg-stage" onclick="nextLine()">
+    <img class="cg-photo" id="cg-photo" alt="">
+    <!-- 可替換：填入圖片路徑後會自動蓋滿全螢幕，沒有圖片則顯示下面的emoji佔位 -->
+    <div class="cg-glyph" id="cg-glyph">🏠❄️</div>
+  </div>
+
+  <div class="dialogue-overlay" id="dialogue-overlay">
+    <div class="dlg-speaker" id="dlg-speaker">旁白</div>
+    <div class="dlg-text" id="dlg-text">……</div>
+    <div class="dlg-hint">輕點畫面繼續　·　點擊右上角圖示可關閉對話框</div>
+  </div>
+</div>
+
+<!-- 結尾視窗 -->
+<div class="overlay" id="overlay-end">
+  <div class="end-card">
+    <div class="end-icon">🌙</div>
+    <div class="end-kicker">FIN</div>
+    <div class="end-title">QUIET NIGHT</div>
+    <p style="font-size:13px;color:var(--ice-ink);">無論是室內或室外的雪，都靜靜下了一整夜。</p>
+    <div class="author-box">
+      感謝您的觀看！。<br>
+      故事 / 企劃 / 網頁製作：TsangFei蒼斐
+    </div>
+    <div class="end-actions">
+      <button class="btn primary small" onclick="location.href='secret-album.html'">返回相簿</button>
+      <button class="btn ghost small" onclick="location.href='index.html'">返回首頁</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* 可自由修改以下對話內容／CG 佔位圖示 */
+const LINES = [
+  {speaker:'', text:'外頭的風雪聲被隔絕在很遠的地方，只剩暖氣運轉的低鳴。', glyph:'', img:''},
+  {speaker:'黎深', text:'...還冷嗎?', glyph:'', img:'assets/night-1.jpg'},
+  {speaker:'你', text:'不冷...嗯...', glyph:'', img:'assets/night-1.jpg'},
+  {speaker:'', text:'雪不知道什麼時候停了，淺淺的月光為兩人罩上朦朧的光暈，能夠看清彼此的輪廓；交纏的四肢是如此契合，彷彿生來就屬於彼此。', glyph:'💡', img:'assets/night-2.jpg'},
+  {speaker:'黎深', text:'......喊我的名字。', glyph:'🕯️💭', img:'assets/night-2.jpg'},
+  {speaker:'你', text:'黎深。', glyph:'🕯️💭', img:'assets/night-2.jpg'},
+  {speaker:'黎深', text:'......再喊一次。', glyph:'🕯️💭', img:'assets/night-2.jpg'},
+  {speaker:'你', text:'黎深...', glyph:'🕯️💭', img:'assets/night-2.jpg'},
+  {speaker:'黎深', text:'我喜歡你喊我的名字...', glyph:'❄️💗', img:'assets/night-2.jpg'},
+  {speaker:'', text:'不知何時細雪再次落下，兩人的呼吸交融，夜還很長', glyph:'2', img:''}
+];
+
+let idx = 0;
+let uiHidden = false;
+const playerName = localStorage.getItem('lishen_ice_player_name') || '你';
+
+function enterScene(){
+  document.getElementById('gate').style.display = 'none';
+  buildDots();
+  renderLine();
+}
+
+function buildDots(){
+  const dots = document.getElementById('dots');
+  dots.innerHTML = '';
+  LINES.forEach((_,i)=>{
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0?' active':'');
+    d.id = 'dot-'+i;
+    dots.appendChild(d);
+  });
+}
+
+function renderLine(){
+  const line = LINES[idx];
+  const glyphEl = document.getElementById('cg-glyph');
+  const photoEl = document.getElementById('cg-photo');
+  glyphEl.classList.add('fade');
+  photoEl.classList.remove('show');
+  setTimeout(()=>{
+    glyphEl.textContent = line.glyph;
+    glyphEl.classList.remove('fade');
+    if(line.img){
+      photoEl.onload = ()=>{ photoEl.classList.add('show'); };
+      photoEl.onerror = ()=>{ photoEl.classList.remove('show'); };
+      photoEl.src = line.img;
+    } else {
+      photoEl.removeAttribute('src');
+    }
+  }, 180);
+  document.getElementById('dlg-speaker').textContent = line.speaker==='你' ? playerName : line.speaker;
+  document.getElementById('dlg-text').textContent = line.text;
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active', i===idx));
+  document.getElementById('page-count').textContent = String(idx+1).padStart(2,'0') + '/' + String(LINES.length).padStart(2,'0');
+}
+
+function nextLine(){
+  if(idx < LINES.length-1){
+    idx++;
+    renderLine();
+  } else {
+    document.getElementById('overlay-end').classList.add('active');
+  }
+}
+
+function toggleUI(){
+  uiHidden = !uiHidden;
+  document.getElementById('dialogue-overlay').classList.toggle('hidden', uiHidden);
+  document.getElementById('dots').style.opacity = uiHidden ? '0' : '1';
+  document.getElementById('page-count').style.opacity = uiHidden ? '0' : '1';
+  document.getElementById('toggle-btn').textContent = uiHidden ? '👁 顯示對話' : '👁 隱藏對話';
+}
+</script>
+</body>
+</html>
