@@ -148,7 +148,8 @@ const LINES = [
   {speaker:'', text:'外頭的風雪聲被隔絕在很遠的地方，只剩暖氣運轉的低鳴。', glyph:'', img:''},
   {speaker:'黎深', text:'...還冷嗎?', glyph:'', img:'assets/night-1.jpg'},
   {speaker:'你', text:'不冷...嗯...', glyph:'', img:'assets/night-1.jpg'},
-  {speaker:'', text:'雪不知道什麼時候停了，淺淺的月光為兩人罩上朦朧的光暈，能夠看清彼此的輪廓；交纏的四肢是如此契合，彷彿生來就屬於彼此。', glyph:'', img:'assets/night-2.jpg'},
+  {speaker:'', text:'雪不知道什麼時候停了，淺淺的月光為兩人罩上朦朧的光暈，能夠看清彼此的輪廓', glyph:'', img:'assets/night-1.jpg'},
+    {speaker:'', text:'交纏的四肢是如此契合，彷彿生來就屬於彼此。', glyph:'', img:'assets/night-1.jpg'},
   {speaker:'黎深', text:'......喊我的名字。', glyph:'', img:'assets/night-2.jpg'},
   {speaker:'你', text:'黎深。', glyph:'', img:'assets/night-2.jpg'},
   {speaker:'黎深', text:'......再喊一次。', glyph:'', img:'assets/night-2.jpg'},
@@ -159,6 +160,7 @@ const LINES = [
 
 let idx = 0;
 let uiHidden = false;
+let lastImg = null;
 const playerName = localStorage.getItem('lishen_ice_player_name') || '你';
 
 function enterScene(){
@@ -182,19 +184,25 @@ function renderLine(){
   const line = LINES[idx];
   const glyphEl = document.getElementById('cg-glyph');
   const photoEl = document.getElementById('cg-photo');
-  glyphEl.classList.add('fade');
-  photoEl.classList.remove('show');
-  setTimeout(()=>{
-    glyphEl.textContent = line.glyph;
-    glyphEl.classList.remove('fade');
-    if(line.img){
-      photoEl.onload = ()=>{ photoEl.classList.add('show'); };
-      photoEl.onerror = ()=>{ photoEl.classList.remove('show'); };
-      photoEl.src = line.img;
-    } else {
-      photoEl.removeAttribute('src');
-    }
-  }, 180);
+  const sameImage = !!line.img && line.img === lastImg;
+
+  if(!sameImage){
+    glyphEl.classList.add('fade');
+    photoEl.classList.remove('show');
+    setTimeout(()=>{
+      glyphEl.textContent = line.glyph;
+      glyphEl.classList.remove('fade');
+      if(line.img){
+        photoEl.onload = ()=>{ photoEl.classList.add('show'); };
+        photoEl.onerror = ()=>{ photoEl.classList.remove('show'); };
+        photoEl.src = line.img;
+      } else {
+        photoEl.removeAttribute('src');
+      }
+    }, 180);
+    lastImg = line.img || null;
+  }
+
   document.getElementById('dlg-speaker').textContent = line.speaker==='你' ? playerName : line.speaker;
   document.getElementById('dlg-text').textContent = line.text;
   document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active', i===idx));
